@@ -1,0 +1,57 @@
+name: freecad-deps-core20
+base: core20
+adopt-info: version
+summary: Dependencies for FreeCAD snaps
+description: |
+  - OCCT
+  - GMSH
+
+grade: stable
+confinement: strict
+
+parts:
+  version:
+    plugin: nil
+    build-packages:
+      - git
+    override-build: |
+      cd "${SNAPCRAFT_PROJECT_DIR}"
+      git_hash=$(git rev-parse --short=8 HEAD)
+      snapcraftctl set-version "${git_hash}"
+
+  occt:
+    plugin: cmake
+    source: https://git.dev.opencascade.org/repos/occt.git
+    source-tag: V7_6_1
+    cmake-parameters:
+      - -DCMAKE_INSTALL_PREFIX=/usr
+      - -DUSE_TBB:BOOL=on
+      - -DUSE_VTK:BOOL=off
+      - -DUSE_FREEIMAGE:BOOL=on
+      - -DBUILD_RELEASE_DISABLE_EXCEPTIONS:BOOL=off
+      - -DCMAKE_BUILD_TYPE=Release
+    build-packages:
+      - libfreeimage-dev
+      - libfreetype6-dev
+      - tcl-dev
+      - tk-dev
+      - libtbb-dev
+      - libgl-dev
+    override-build: |
+      snapcraftctl build
+      find "${SNAPCRAFT_PART_INSTALL}/usr/lib/cmake" \
+        -type f \
+        -name "*.cmake" \
+        -exec sed -i -e "s|\${OCCT_INSTALL_BIN_LETTER}||g" {} \;
+
+  gmsh: # FEM
+    after: [occt]
+    plugin: cmake
+    source: https://gitlab.onelab.info/gmsh/gmsh.git
+    source-tag: gmsh_4_9_4
+    cmake-parameters:
+      - -DCMAKE_INSTALL_PREFIX=/usr
+      - -DCMAKE_BUILD_TYPE=Release
+      - -DENABLE_BUILD_DYNAMIC=1
+      - -DENABLE_MED=0
+      - -DENABLE_FLTK=0
