@@ -42,7 +42,7 @@ parts:
       find "${SNAPCRAFT_PART_INSTALL}/usr/lib/cmake" \
         -type f \
         -name "*.cmake" \
-        -exec sed -i -e "s|\${OCCT_INSTALL_BIN_LETTER}||g" {} \;
+        -exec sed -i -e 's|\\${OCCT_INSTALL_BIN_LETTER}||g' {} \;
 
   gmsh: # FEM
     after: [occt]
