@@ -43,15 +43,28 @@ parts:
         -type f \
         -name "*.cmake" \
         -exec sed -i -e 's|\\${OCCT_INSTALL_BIN_LETTER}||g' {} \;
+    prime:
+      -  -usr/share/opencascade
 
   gmsh: # FEM
     after: [occt]
     plugin: cmake
     source: https://gitlab.onelab.info/gmsh/gmsh.git
-    source-tag: gmsh_4_9_4
+    source-tag: gmsh_4_9_5
     cmake-parameters:
       - -DCMAKE_INSTALL_PREFIX=/usr
       - -DCMAKE_BUILD_TYPE=Release
       - -DENABLE_BUILD_DYNAMIC=1
       - -DENABLE_MED=0
       - -DENABLE_FLTK=0
+  
+  cleanup:
+    after: [occt, gmsh]
+    plugin: nil
+    override-prime: |
+      set -eux
+      for cruft in bug lintian man; do
+        rm -rf $SNAPCRAFT_PRIME/usr/share/$cruft
+      done
+      find $SNAPCRAFT_PRIME/usr/share/doc/ -type f -not -name 'copyright' -delete
+      find $SNAPCRAFT_PRIME/usr/share -type d -empty -delete
