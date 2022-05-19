@@ -29,6 +29,7 @@ parts:
       - -DUSE_VTK:BOOL=off
       - -DUSE_FREEIMAGE:BOOL=on
       - -DBUILD_RELEASE_DISABLE_EXCEPTIONS:BOOL=off
+      - -DUSE_RAPIDJSON:BOOL=on
       - -DCMAKE_BUILD_TYPE=Release
     build-packages:
       - libfreeimage-dev
@@ -37,6 +38,7 @@ parts:
       - tk-dev
       - libtbb-dev
       - libgl-dev
+      - rapidjson-dev
     override-build: |
       snapcraftctl build
       find "${SNAPCRAFT_PART_INSTALL}/usr/lib/cmake" \
