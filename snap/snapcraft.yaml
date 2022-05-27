@@ -21,8 +21,8 @@ parts:
 
   occt:
     plugin: cmake
-    source: https://git.dev.opencascade.org/repos/occt.git
-    source-tag: V7_6_2
+    source: https://gitlab.com/blobfish/occt.git
+    source-branch: V7_6_2_BF
     cmake-parameters:
       - -DCMAKE_INSTALL_PREFIX=/usr
       - -DUSE_TBB:BOOL=on
