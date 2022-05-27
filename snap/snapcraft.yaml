@@ -52,7 +52,7 @@ parts:
     after: [occt]
     plugin: cmake
     source: https://gitlab.onelab.info/gmsh/gmsh.git
-    source-tag: gmsh_4_10_1
+    source-tag: gmsh_4_10_3
     cmake-parameters:
       - -DCMAKE_INSTALL_PREFIX=/usr
       - -DCMAKE_BUILD_TYPE=Release
