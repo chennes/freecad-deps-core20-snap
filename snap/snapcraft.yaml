@@ -55,6 +55,7 @@ parts:
     source-tag: gmsh_4_10_3
     cmake-parameters:
       - -DCMAKE_INSTALL_PREFIX=/usr
+      - -DCMAKE_PREFIX_PATH=${SNAPCRAFT_STAGE}/usr
       - -DCMAKE_BUILD_TYPE=Release
       - -DENABLE_BUILD_DYNAMIC=1
       - -DENABLE_MED=0
