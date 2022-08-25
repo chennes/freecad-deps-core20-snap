@@ -22,7 +22,7 @@ parts:
   occt:
     plugin: cmake
     source: https://gitlab.com/blobfish/occt.git
-    source-branch: V7_6_2_BF
+    source-branch: V7_6_3_BF
     cmake-parameters:
       - -DCMAKE_INSTALL_PREFIX=/usr
       - -DUSE_TBB:BOOL=on
@@ -52,7 +52,7 @@ parts:
     after: [occt]
     plugin: cmake
     source: https://gitlab.onelab.info/gmsh/gmsh.git
-    source-tag: gmsh_4_10_3
+    source-tag: gmsh_4_10_5
     cmake-parameters:
       - -DCMAKE_INSTALL_PREFIX=/usr
       - -DCMAKE_PREFIX_PATH=${SNAPCRAFT_STAGE}/usr
